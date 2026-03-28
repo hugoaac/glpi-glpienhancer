@@ -1,0 +1,341 @@
+/*
+ * GLPI Enhancer — Modernismo técnico de laboratório.
+ * Filosofia deste arquivo: superfícies de observabilidade, contraste funcional,
+ * microinterações discretas e hierarquia visual orientada a operação.
+ */
+
+:root {
+  --glpienhancer-ink-950: #101822;
+  --glpienhancer-ink-800: #223142;
+  --glpienhancer-ink-700: #30465d;
+  --glpienhancer-paper: #f5f8fb;
+  --glpienhancer-line: rgba(22, 42, 64, 0.12);
+  --glpienhancer-shadow: 0 18px 40px rgba(16, 24, 34, 0.16);
+  --glpienhancer-success-700: #0d7a53;
+  --glpienhancer-success-600: #139a68;
+  --glpienhancer-success-100: #e9f8f1;
+  --glpienhancer-muted-500: #708297;
+  --glpienhancer-muted-200: #d5dee8;
+  --glpienhancer-white: #ffffff;
+}
+
+.glpienhancer-ticket-flash {
+  display: none !important;
+}
+
+.glpienhancer-toast-stack {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: min(28rem, calc(100vw - 1.5rem));
+  pointer-events: none;
+}
+
+.glpienhancer-toast {
+  pointer-events: auto;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: 0.875rem;
+  padding: 1rem 1rem 1rem 0.95rem;
+  border: 1px solid rgba(19, 154, 104, 0.18);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(245, 248, 251, 0.94)),
+    var(--glpienhancer-white);
+  color: var(--glpienhancer-ink-950);
+  border-radius: 16px;
+  box-shadow: var(--glpienhancer-shadow);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transform: translate3d(0, -10px, 0);
+  opacity: 0;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.glpienhancer-toast.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.glpienhancer-toast.is-leaving {
+  opacity: 0;
+  transform: translate3d(0, -6px, 0);
+}
+
+.glpienhancer-toast::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(19, 154, 104, 0.16), transparent 28%);
+  pointer-events: none;
+}
+
+.glpienhancer-toast__icon {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  width: 2.4rem;
+  height: 2.4rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.9rem;
+  background: linear-gradient(180deg, var(--glpienhancer-success-600), var(--glpienhancer-success-700));
+  color: var(--glpienhancer-white);
+  font-size: 1rem;
+  font-weight: 700;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.glpienhancer-toast__content,
+.glpienhancer-toast__actions {
+  position: relative;
+  z-index: 1;
+}
+
+.glpienhancer-toast__title {
+  font-size: 0.96rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.25rem;
+}
+
+.glpienhancer-toast__text {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--glpienhancer-ink-700);
+}
+
+.glpienhancer-toast__id {
+  color: var(--glpienhancer-ink-950);
+  font-weight: 800;
+}
+
+.glpienhancer-toast__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.glpienhancer-toast__link,
+.glpienhancer-toast__close,
+.glpienhancer-refresh-panel__toggle {
+  appearance: none;
+  border: none;
+  text-decoration: none;
+  transition: transform 180ms ease, background-color 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.glpienhancer-toast__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.25rem;
+  padding: 0 0.9rem;
+  border-radius: 999px;
+  background: var(--glpienhancer-ink-950);
+  color: var(--glpienhancer-white);
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.glpienhancer-toast__link:hover,
+.glpienhancer-toast__link:focus-visible {
+  background: var(--glpienhancer-ink-800);
+  color: var(--glpienhancer-white);
+  transform: translateY(-1px);
+}
+
+.glpienhancer-toast__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--glpienhancer-muted-500);
+  border: 1px solid transparent;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.glpienhancer-toast__close:hover,
+.glpienhancer-toast__close:focus-visible {
+  color: var(--glpienhancer-ink-950);
+  border-color: var(--glpienhancer-line);
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.glpienhancer-refresh-panel {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto auto;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 0 0 1rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--glpienhancer-line);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(245, 248, 251, 0.92)),
+    var(--glpienhancer-white);
+  box-shadow: 0 12px 30px rgba(16, 24, 34, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.glpienhancer-refresh-panel__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 5.5rem;
+  min-height: 2.1rem;
+  padding: 0 0.8rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.glpienhancer-refresh-panel__badge[data-state='on'] {
+  background: var(--glpienhancer-success-100);
+  color: var(--glpienhancer-success-700);
+}
+
+.glpienhancer-refresh-panel__badge[data-state='off'] {
+  background: #eef2f6;
+  color: #667788;
+}
+
+.glpienhancer-refresh-panel__copy {
+  min-width: 0;
+}
+
+.glpienhancer-refresh-panel__label {
+  color: var(--glpienhancer-ink-950);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.15rem;
+}
+
+.glpienhancer-refresh-panel__meta,
+.glpienhancer-refresh-panel__countdown {
+  color: var(--glpienhancer-muted-500);
+  font-size: 0.82rem;
+  line-height: 1.35;
+}
+
+.glpienhancer-refresh-panel__countdown {
+  white-space: nowrap;
+}
+
+.glpienhancer-refresh-panel__interval {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--glpienhancer-muted-500);
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.glpienhancer-refresh-panel__select {
+  min-height: 2.3rem;
+  padding: 0 2.15rem 0 0.9rem;
+  border: 1px solid var(--glpienhancer-muted-200);
+  border-radius: 999px;
+  background: var(--glpienhancer-white);
+  color: var(--glpienhancer-ink-950);
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.glpienhancer-refresh-panel__select:focus-visible {
+  outline: none;
+  border-color: rgba(16, 24, 34, 0.22);
+  box-shadow: 0 0 0 3px rgba(16, 24, 34, 0.08);
+}
+
+.glpienhancer-refresh-panel__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.3rem;
+  min-width: 6.2rem;
+  padding: 0 1rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  border: 1px solid transparent;
+}
+
+.glpienhancer-refresh-panel__toggle[data-state='on'] {
+  background: var(--glpienhancer-ink-950);
+  color: var(--glpienhancer-white);
+}
+
+.glpienhancer-refresh-panel__toggle[data-state='off'] {
+  background: var(--glpienhancer-white);
+  color: var(--glpienhancer-ink-800);
+  border-color: var(--glpienhancer-muted-200);
+}
+
+.glpienhancer-refresh-panel__toggle:hover,
+.glpienhancer-refresh-panel__toggle:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(16, 24, 34, 0.08);
+}
+
+@media (max-width: 960px) {
+  .glpienhancer-refresh-panel {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .glpienhancer-refresh-panel__countdown {
+    white-space: normal;
+  }
+
+  .glpienhancer-refresh-panel__interval {
+    justify-content: space-between;
+  }
+
+  .glpienhancer-refresh-panel__select {
+    width: 100%;
+  }
+
+  .glpienhancer-toast-stack {
+    left: 0.75rem;
+    right: 0.75rem;
+    width: auto;
+  }
+
+  .glpienhancer-toast {
+    grid-template-columns: auto 1fr;
+  }
+
+  .glpienhancer-toast__actions {
+    grid-column: 1 / -1;
+    justify-content: flex-end;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glpienhancer-toast,
+  .glpienhancer-toast__link,
+  .glpienhancer-toast__close,
+  .glpienhancer-refresh-panel__toggle,
+  .glpienhancer-refresh-panel__select {
+    transition: none !important;
+  }
+}
