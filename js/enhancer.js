@@ -19,7 +19,7 @@
     intervalStorageKey: getMetaContent('glpienhancer-interval-storage-key', 'glpienhancer:auto-refresh-interval-ms'),
     refreshIntervalOptionsMs: getMetaNumberList('glpienhancer-interval-options-ms', [30000, 60000, 120000, 300000]),
     countdownStepMs: 1000,
-    toastDurationMs: 5000,
+    toastDurationMs: 10000,
     activityDebounceMs: 1200,
     markerPrefix: getMetaContent('glpienhancer-marker-prefix', 'GLPIENHANCER_TICKET_CREATED|'),
   };
